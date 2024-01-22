@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "mightyfields-automation-test"
+version = "0.1.0"
+description = ""
+authors = ["Martin"]
+readme = "README.md"
+packages = [{include = "mightyfields_automation_test"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+selenium = "^4.16.0"
+webdriver-manager = "^4.0.1"
+pytest = "^7.4.4"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
