@@ -30,7 +30,6 @@ class Initialization:
         AVAILABLE_BROWSERS = {'chrome': self.chrome, 'firefox': self.firefox,}
 
         browser = command_line_arguments['browser']
-        location = command_line_arguments["location"]
         headless = command_line_arguments['headless']
         full_screen = command_line_arguments['full_screen']
 
@@ -40,7 +39,7 @@ class Initialization:
         except KeyError:
             raise KeyError(f"Browser {browser} not found.")
         
-        web_driver = browser(location, headless)
+        web_driver = browser(headless)
 
         if full_screen:
             web_driver.maximize_window()
@@ -57,32 +56,24 @@ class Initialization:
             web_driver.close()
             web_driver.quit()
     
-    def firefox(self, where: str, headless: bool = False) -> webdriver.Firefox:
+    def firefox(self, headless: bool = False) -> webdriver.Firefox:
         """
         Returns a Firefox driver instance.
 
         Args:
-            where (str): Path to the geckodriver executable.
             headless (bool, optional): Whether to run the browser in headless mode. Defaults to False.
 
         Returns:
             webdriver.Firefox: A Firefox driver instance.
         """
-        firefox_opt = webdriver.FirefoxOptions()
-        if where == 'local':           
-            if headless:
-                firefox_opt.add_argument("--headless")
+        firefox_opt = webdriver.FirefoxOptions()  
 
-            return webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=firefox_opt)
-        
-        else:
-            return webdriver.Remote(
-                command_executor="http://firefox:4444", options=firefox_opt
-                # default firefox container or any other container port is 4444  
-            )
+        if headless:
+            firefox_opt.add_argument("--headless")
 
+        return webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=firefox_opt)   
 
-    def chrome(self, where: str, headless: bool = False) -> webdriver.Chrome:
+    def chrome(self, headless: bool = False) -> webdriver.Chrome:
         """
         Returns a Chrome driver instance.
 
@@ -93,15 +84,10 @@ class Initialization:
             webdriver.Chrome: A Chrome driver instance.
         """
         chrome_opt = webdriver.ChromeOptions()
-        if where == 'local':              
-            if headless:
-            
-                chrome_opt.add_argument("--headless")            
-            return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_opt)
-        
-        else:
-            return webdriver.Remote(
-                command_executor="http://chrome:4444", options=chrome_opt 
-                # any container defau
-            )
+             
+        if headless:        
+            chrome_opt.add_argument("--headless")   
+
+        return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_opt)
+
 

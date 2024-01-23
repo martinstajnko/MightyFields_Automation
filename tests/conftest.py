@@ -13,9 +13,6 @@ def pytest_addoption(parser):
         "--browser", action="store", default="chrome", help="browser: chrome or firefox"
     )
     parser.addoption(
-        "--location", action="store", default="local" # local | remote
-    ) 
-    parser.addoption(
         "--headless", action="store", default=False, help="headless: true or false"
     )
     parser.addoption(
@@ -36,7 +33,6 @@ def command_line_arguments(request) -> dict:
     """
     return {
         "browser": request.config.getoption("--browser"),
-        "location": request.config.getoption("--location"),
         "headless": request.config.getoption("--headless"),
         "full_screen": request.config.getoption("--full_screen"),
     }
