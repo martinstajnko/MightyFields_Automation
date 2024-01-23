@@ -1,3 +1,5 @@
+""" Define a dataclass for a user. """
+
 from dataclasses import dataclass, field
 
 from core.enums import Countries, LanguageLevels

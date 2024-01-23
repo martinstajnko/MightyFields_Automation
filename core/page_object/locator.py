@@ -1,3 +1,5 @@
+""" Classes-locators for different pages in MightyFields application. """
+
 from selenium.webdriver.common.by import By
 
 
